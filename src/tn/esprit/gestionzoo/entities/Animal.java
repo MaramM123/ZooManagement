@@ -12,7 +12,7 @@ public class Animal {
     public Animal(String family, String name, int age, boolean isMammal) {
         this.family = family;
         this.name = name;
-        setAge(age); // goes through the setter so the validation applies
+        setAge(age);
         this.isMammal = isMammal;
     }
 
@@ -36,7 +36,6 @@ public class Animal {
         return age;
     }
 
-    // Instruction 18: an animal cannot have a negative age
     public void setAge(int age) {
         if (age < 0) {
             throw new IllegalArgumentException("An animal cannot have a negative age: " + age);

@@ -2,18 +2,25 @@ package tn.esprit.gestionzoo.entities;
 
 public class Zoo {
     private static final int NBR_CAGES = 25;
+    private static final int MAX_AQUATIC_ANIMALS = 10;
 
     private Animal[] animals;
     private String name;
     private String city;
     private int animalCount;
 
+
+    private Aquatic[] aquaticAnimals;
+    private int aquaticCount;
+
     public Zoo() {
         animals = new Animal[NBR_CAGES];
+        aquaticAnimals = new Aquatic[MAX_AQUATIC_ANIMALS];
     }
 
     public Zoo(String name, String city) {
         animals = new Animal[NBR_CAGES];
+        aquaticAnimals = new Aquatic[MAX_AQUATIC_ANIMALS];
         setName(name); // goes through the setter so the validation applies
         this.city = city;
     }
@@ -22,7 +29,7 @@ public class Zoo {
         return name;
     }
 
-    // Instruction 18: a zoo name must not be empty
+
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("The zoo name must not be empty");
@@ -46,6 +53,14 @@ public class Zoo {
         return animals;
     }
 
+    public Aquatic[] getAquaticAnimals() {
+        return aquaticAnimals;
+    }
+
+    public int getAquaticCount() {
+        return aquaticCount;
+    }
+
     public static int getNbrCages() {
         return NBR_CAGES;
     }
@@ -65,7 +80,7 @@ public class Zoo {
         return animalCount >= NBR_CAGES;
     }
 
-    // Instruction 17: addAnimal relies on isZooFull()
+
     public boolean addAnimal(Animal animal) {
         if (isZooFull() || searchAnimal(animal) != -1) {
             return false;
@@ -108,5 +123,46 @@ public class Zoo {
             return z1;
         }
         return z2;
+    }
+
+
+    public void addAquaticAnimal(Aquatic aquatic) {
+        if (aquatic == null) {
+            System.out.println("Cannot add a null aquatic animal");
+            return;
+        }
+        if (aquaticCount >= MAX_AQUATIC_ANIMALS) {
+            System.out.println("No more room for aquatic animals in " + name);
+            return;
+        }
+        aquaticAnimals[aquaticCount] = aquatic;
+        aquaticCount++;
+    }
+
+    public float maxPenguinSwimmingDepth() {
+        float max = 0;
+        for (int i = 0; i < aquaticCount; i++) {
+            if (aquaticAnimals[i] instanceof Penguin) {
+                Penguin penguin = (Penguin) aquaticAnimals[i];
+                if (penguin.getSwimmingDepth() > max) {
+                    max = penguin.getSwimmingDepth();
+                }
+            }
+        }
+        return max;
+    }
+
+    public void displayNumberOfAquaticsByType() {
+        int dolphins = 0;
+        int penguins = 0;
+        for (int i = 0; i < aquaticCount; i++) {
+            if (aquaticAnimals[i] instanceof Dolphin) {
+                dolphins++;
+            } else if (aquaticAnimals[i] instanceof Penguin) {
+                penguins++;
+            }
+        }
+        System.out.println("Dolphins : " + dolphins);
+        System.out.println("Penguins : " + penguins);
     }
 }
