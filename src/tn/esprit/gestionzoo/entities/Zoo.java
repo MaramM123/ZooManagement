@@ -1,7 +1,7 @@
 package tn.esprit.gestionzoo.entities;
 
 public class Zoo {
-    private static final int NBR_CAGES = 25;
+    private static final int NBR_CAGES = 3;
     private static final int MAX_AQUATIC_ANIMALS = 10;
 
     private Animal[] animals;
@@ -21,7 +21,7 @@ public class Zoo {
     public Zoo(String name, String city) {
         animals = new Animal[NBR_CAGES];
         aquaticAnimals = new Aquatic[MAX_AQUATIC_ANIMALS];
-        setName(name); // goes through the setter so the validation applies
+        setName(name);
         this.city = city;
     }
 
@@ -81,13 +81,16 @@ public class Zoo {
     }
 
 
-    public boolean addAnimal(Animal animal) {
-        if (isZooFull() || searchAnimal(animal) != -1) {
-            return false;
+    public void addAnimal(Animal animal) throws ZooFullException {
+        if (animalCount >= NBR_CAGES) {
+            throw new ZooFullException("The zoo " + name + " is full: "
+                    + animalCount + " animals for " + NBR_CAGES + " cages");
+        }
+        if (searchAnimal(animal) != -1) {
+            return; // animal already in the zoo
         }
         animals[animalCount] = animal;
         animalCount++;
-        return true;
     }
 
     public void displayAnimals() {
@@ -139,6 +142,7 @@ public class Zoo {
         aquaticCount++;
     }
 
+
     public float maxPenguinSwimmingDepth() {
         float max = 0;
         for (int i = 0; i < aquaticCount; i++) {
@@ -151,6 +155,7 @@ public class Zoo {
         }
         return max;
     }
+
 
     public void displayNumberOfAquaticsByType() {
         int dolphins = 0;

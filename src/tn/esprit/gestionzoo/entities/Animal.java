@@ -9,7 +9,7 @@ public class Animal {
     public Animal() {
     }
 
-    public Animal(String family, String name, int age, boolean isMammal) {
+    public Animal(String family, String name, int age, boolean isMammal) throws InvalidAgeException {
         this.family = family;
         this.name = name;
         setAge(age);
@@ -36,9 +36,10 @@ public class Animal {
         return age;
     }
 
-    public void setAge(int age) {
+
+    public void setAge(int age) throws InvalidAgeException {
         if (age < 0) {
-            throw new IllegalArgumentException("An animal cannot have a negative age: " + age);
+            throw new InvalidAgeException("An animal cannot have a negative age: " + age);
         }
         this.age = age;
     }
