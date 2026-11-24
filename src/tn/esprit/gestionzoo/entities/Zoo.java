@@ -9,7 +9,6 @@ public class Zoo {
     private String city;
     private int animalCount;
 
-
     private Aquatic[] aquaticAnimals;
     private int aquaticCount;
 
@@ -21,14 +20,13 @@ public class Zoo {
     public Zoo(String name, String city) {
         animals = new Animal[NBR_CAGES];
         aquaticAnimals = new Aquatic[MAX_AQUATIC_ANIMALS];
-        setName(name);
+        setName(name); // goes through the setter so the validation applies
         this.city = city;
     }
 
     public String getName() {
         return name;
     }
-
 
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -80,7 +78,6 @@ public class Zoo {
         return animalCount >= NBR_CAGES;
     }
 
-
     public void addAnimal(Animal animal) throws ZooFullException {
         if (animalCount >= NBR_CAGES) {
             throw new ZooFullException("The zoo " + name + " is full: "
@@ -128,7 +125,6 @@ public class Zoo {
         return z2;
     }
 
-
     public void addAquaticAnimal(Aquatic aquatic) {
         if (aquatic == null) {
             System.out.println("Cannot add a null aquatic animal");
@@ -142,7 +138,6 @@ public class Zoo {
         aquaticCount++;
     }
 
-
     public float maxPenguinSwimmingDepth() {
         float max = 0;
         for (int i = 0; i < aquaticCount; i++) {
@@ -155,7 +150,6 @@ public class Zoo {
         }
         return max;
     }
-
 
     public void displayNumberOfAquaticsByType() {
         int dolphins = 0;

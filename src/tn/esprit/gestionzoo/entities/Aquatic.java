@@ -2,8 +2,7 @@ package tn.esprit.gestionzoo.entities;
 
 import java.util.Objects;
 
-
-public abstract class Aquatic extends Animal {
+public abstract class Aquatic extends Animal implements Carnivore<Food> {
     private String habitat;
 
     public Aquatic() {
@@ -28,9 +27,16 @@ public abstract class Aquatic extends Animal {
         return "Aquatic [" + super.toString() + ", habitat=" + habitat + "]";
     }
 
-
     public abstract void swim();
 
+    @Override
+    public void eatMeat(Food meat) {
+        if (meat == Food.MEAT) {
+            System.out.println("This aquatic animal is eating meat");
+        } else {
+            System.out.println("This aquatic animal is a carnivore: it cannot eat " + meat);
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -45,7 +51,6 @@ public abstract class Aquatic extends Animal {
                 && getAge() == other.getAge()
                 && Objects.equals(habitat, other.habitat);
     }
-
 
     @Override
     public int hashCode() {
